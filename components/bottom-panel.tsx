@@ -2,8 +2,8 @@ type Props = { children: React.ReactNode };
 
 export default function BottomPanel({ children }: Props) {
   return (
-    <div className="mt-auto h-20 border-t bg-gray-100 flex items-center">
-      {children}
-    </div>
+    <section className="mt-auto border-t bg-gray-100">
+      <div className="max-w-md mx-auto h-20 flex items-center">{children}</div>
+    </section>
   );
 }
