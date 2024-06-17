@@ -17,9 +17,9 @@ export function DrawerSingle() {
         <Drawer.Overlay className="fixed inset-0 bg-black/40" />
         <Drawer.Content className="max-w-md mx-auto bg-white flex flex-col rounded-t-2xl max-h-[96%] fixed bottom-0 left-0 right-0 flex-1 pt-4 outline-none">
           <DragButton />
-          <div className="mt-4 px-4 w-full text-lg">
+          <div className="p-4 w-full text-lg">
             <h3 className="font-medium">Title</h3>
-            <p className="text-gray-600 my-4">Content</p>
+            <p className="text-gray-600 mt-4">Content</p>
           </div>
           <BottomPart />
         </Drawer.Content>
