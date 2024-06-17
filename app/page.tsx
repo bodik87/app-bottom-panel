@@ -16,7 +16,7 @@ export default function Homepage({}: Props) {
         <div className="w-full flex justify-between items-center">
           <input
             type="search"
-            className="w-full h-[50px] ml-4 rounded-xl px-4 text-lg border"
+            className="w-full h-[50px] ml-4 rounded-xl px-4 text-lg"
             placeholder="Text"
           />
 

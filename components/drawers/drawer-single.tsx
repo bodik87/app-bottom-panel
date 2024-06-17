@@ -7,9 +7,9 @@ import { AlignJustify } from "lucide-react";
 
 export function DrawerSingle() {
   return (
-    <Drawer.Root shouldScaleBackground>
+    <Drawer.Root>
       <Drawer.Trigger asChild>
-        <button className="flex justify-center items-center w-20 h-20">
+        <button className="min-w-[70px] h-[70px] flex justify-center items-center">
           <AlignJustify size={30} />
         </button>
       </Drawer.Trigger>
