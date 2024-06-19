@@ -5,6 +5,7 @@ import {
   useMotionValue,
   useAnimate,
   motion,
+  AnimatePresence,
 } from "framer-motion";
 
 export const Double = () => {
@@ -121,88 +122,85 @@ const DragCloseDrawer = ({ open, setOpen, children }: Props) => {
   const controls = useDragControls();
 
   const handleClose = async () => {
-    animate(scope.current, {
-      opacity: [1, 0],
-    });
+    animate(scope.current, { opacity: [1, 0] });
 
     const yStart = typeof y.get() === "number" ? y.get() : 0;
 
-    await animate("#drawer", {
-      y: [yStart, height],
-    });
+    await animate("#drawer", { y: [yStart, height] });
 
     setOpen(false);
   };
 
   return (
     <>
-      {open && (
-        <>
-          <motion.div
-            onClick={(e) => e.stopPropagation()}
-            initial={{ y: "-100%" }}
-            animate={{ y: "0%" }}
-            transition={{ ease: "easeInOut" }}
-            className="absolute top-0 h-[100px] w-full overflow-hidden shadow-md bg-white z-50 flex items-center justify-center px-4"
-          >
-            <input
-              type="search"
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              className="w-full h-[50px] rounded-xl px-4 text-xl border-2"
-              placeholder="Search..."
-            />
-          </motion.div>
-
-          <motion.div
-            ref={scope}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            onClick={handleClose}
-            className="fixed inset-0 z-10 bg-neutral-950/70"
-          >
+      <AnimatePresence>
+        {open && (
+          <div ref={scope}>
             <motion.div
-              id="drawer"
-              ref={drawerRef}
               onClick={(e) => e.stopPropagation()}
-              initial={{ y: "100%" }}
+              initial={{ y: "-100%" }}
               animate={{ y: "0%" }}
-              transition={{
-                ease: "easeInOut",
-              }}
-              className="absolute bottom-0 h-[calc(100dvh_-_100px)] w-full overflow-hidden bg-white"
-              style={{ y }}
-              drag="y"
-              dragControls={controls}
-              onDragEnd={() => {
-                if (y.get() >= 100) {
-                  handleClose();
-                }
-              }}
-              dragListener={false}
-              dragConstraints={{
-                top: 0,
-                bottom: 0,
-              }}
-              dragElastic={{
-                top: 0,
-                bottom: 0.5,
-              }}
+              exit={{ y: "-100%" }}
+              transition={{ ease: "easeInOut" }}
+              className="absolute top-0 h-[100px] w-full overflow-hidden shadow-md bg-white z-50 flex items-center justify-center px-4"
             >
-              <div className="absolute left-0 right-0 top-0 z-10 flex justify-center p-4 bg-white">
-                <button
-                  onPointerDown={(e) => {
-                    controls.start(e);
-                  }}
-                  className="h-2 w-14 cursor-grab touch-none rounded-full bg-gray-300 active:cursor-grabbing"
-                ></button>
-              </div>
-              <div className="relative z-0 h-full overflow-y-auto p-4 pt-12">
-                {children}
-              </div>
+              <input
+                type="search"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                className="w-full h-[50px] rounded-xl px-4 text-xl border-2"
+                placeholder="Search..."
+              />
             </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {open && (
+        <motion.div
+          ref={scope}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          onClick={handleClose}
+          className="fixed inset-0 z-10 bg-neutral-950/70"
+        >
+          <motion.div
+            id="drawer"
+            ref={drawerRef}
+            onClick={(e) => e.stopPropagation()}
+            initial={{ y: "100%" }}
+            animate={{ y: "0%" }}
+            transition={{
+              ease: "easeInOut",
+            }}
+            className="absolute bottom-0 h-[calc(100dvh_-_100px)] w-full overflow-hidden bg-white"
+            style={{ y }}
+            drag="y"
+            dragControls={controls}
+            onDragEnd={() => {
+              if (y.get() >= 100) handleClose();
+            }}
+            dragListener={false}
+            dragConstraints={{
+              top: 0,
+              bottom: 0,
+            }}
+            dragElastic={{
+              top: 0,
+              bottom: 0.5,
+            }}
+          >
+            <div className="absolute left-0 right-0 top-0 z-10 flex justify-center p-4 bg-white">
+              <div
+                onPointerDown={(e) => controls.start(e)}
+                className="h-2 w-14 cursor-grab touch-none rounded-full bg-gray-300 active:cursor-grabbing"
+              />
+            </div>
+            <div className="relative z-0 h-full overflow-y-auto p-4 pt-12">
+              {children}
+            </div>
           </motion.div>
-        </>
+        </motion.div>
       )}
     </>
   );
