@@ -21,7 +21,7 @@ export default function Homepage({}: Props) {
         <div className="w-full pl-4 flex justify-between items-center">
           <div
             onClick={() => setOpen(true)}
-            className="w-full bg-white flex items-center text-gray-500 h-[50px] rounded-xl px-4 text-xl"
+            className="w-full bg-white flex items-center text-gray-500 h-[50px] rounded-xl px-4 text-xl cursor-text hover:ring-1 hover:ring-gray-300 transition-all"
           >
             Search...
           </div>

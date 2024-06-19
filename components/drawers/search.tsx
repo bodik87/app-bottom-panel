@@ -16,7 +16,7 @@ export const Search = ({ open, setOpen }: SearchProps) => {
   return (
     <>
       <DragCloseDrawer open={open} setOpen={setOpen}>
-        <div className="mx-auto max-w-2xl space-y-4 text-neutral-400">
+        <div className="mx-auto max-w-md space-y-4 text-neutral-400 select-none">
           <h2 className="text-2xl font-bold text-neutral-200">
             Drag the handle at the top of this modal downwards 100px to close it
           </h2>
@@ -93,7 +93,7 @@ const DragCloseDrawer = ({ open, setOpen, children }: Props) => {
               value={text}
               autoFocus
               onChange={(e) => setText(e.target.value)}
-              className="w-full h-[50px] rounded-xl px-4 text-xl border-2"
+              className="max-w-md mx-auto w-full h-[50px] rounded-xl px-4 text-xl border-2"
               placeholder="Search..."
             />
           </motion.div>
@@ -128,7 +128,7 @@ const DragCloseDrawer = ({ open, setOpen, children }: Props) => {
           >
             <div
               onPointerDown={(e) => controls.start(e)}
-              className="absolute left-0 right-0 top-0 z-10 flex justify-center p-4 bg-white touch-none cursor-grab active:cursor-grabbing"
+              className="absolute left-0 right-0 top-0 z-10 flex justify-center p-4 bg-white touch-none cursor-grab active:cursor-grabbing select-none"
             >
               <div className="h-2 w-14 rounded-full bg-gray-300" />
             </div>
