@@ -1,6 +1,6 @@
 import React, { Dispatch, ReactNode, SetStateAction, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { X } from "lucide-react";
+import { Delete, X } from "lucide-react";
 
 type SearchProps = {
   open: boolean;
@@ -11,8 +11,8 @@ export const Search = ({ open, setOpen }: SearchProps) => {
   return (
     <>
       <DragCloseDrawer open={open} setOpen={setOpen}>
-        <div className="mx-auto max-w-md space-y-4 text-neutral-400 overflow-y-auto">
-          <h2 className="text-2xl font-bold text-neutral-400 z-10">
+        <div className="mx-auto max-w-md space-y-4">
+          <h2 className="text-2xl font-bold">
             Drag the handle at the top of this modal downwards 100px to close it
           </h2>
           <p>
@@ -72,14 +72,25 @@ const DragCloseDrawer = ({ open, setOpen, children }: Props) => {
             className="fixed top-0 h-[70px] w-full overflow-hidden shadow-md bg-gray-200 flex items-center justify-between pl-4"
           >
             <div className="max-w-md mx-auto w-full flex justify-between items-center">
-              <input
-                type="search"
-                value={text}
-                autoFocus
-                onChange={(e) => setText(e.target.value)}
-                className="w-full h-[50px] rounded-xl px-4 text-xl border-2"
-                placeholder="Search..."
-              />
+              <div className="relative w-full">
+                <input
+                  type="search"
+                  value={text}
+                  autoFocus
+                  onChange={(e) => setText(e.target.value)}
+                  className="w-full h-[50px] rounded-xl pl-4 pr-10 text-xl border-2"
+                  placeholder="Search..."
+                />
+                {text && (
+                  <button
+                    onClick={() => setText("")}
+                    className="absolute right-0 top-0 h-[50px] w-[50px] rounded-r-xl flex items-center justify-center"
+                  >
+                    <Delete />
+                  </button>
+                )}
+              </div>
+
               <button
                 onClick={handleClose}
                 className="min-w-[70px] h-[70px] flex justify-center items-center"
@@ -96,7 +107,7 @@ const DragCloseDrawer = ({ open, setOpen, children }: Props) => {
             transition={{ ease: "anticipate" }}
             className="fixed bottom-0 h-[calc(100dvh_-_70px)] w-full overflow-y-auto bg-white"
           >
-            <div className="relative h-full overflow-y-auto p-4 pt-8">
+            <div className="relative h-full overflow-y-auto p-4">
               {children}
             </div>
           </motion.div>
