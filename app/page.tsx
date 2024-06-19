@@ -4,7 +4,7 @@ import { useState } from "react";
 import BottomPanel from "@/components/bottom-panel";
 import { DrawerSingle } from "@/components/drawers/drawer-single";
 import Carousel from "@/components/carousel";
-import { DrawerSnapPoints } from "@/components/drawers/drawer-snap-points";
+import { Double } from "@/components/drawers/double-panel.tsx";
 
 type Props = {};
 
@@ -14,7 +14,7 @@ export default function Homepage({}: Props) {
     <>
       <Carousel />
 
-      <DrawerSnapPoints />
+      <Double />
 
       <BottomPanel>
         <div className="w-full flex justify-between items-center">
