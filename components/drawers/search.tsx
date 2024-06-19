@@ -11,8 +11,8 @@ export const Search = ({ open, setOpen }: SearchProps) => {
   return (
     <>
       <DragCloseDrawer open={open} setOpen={setOpen}>
-        <div className="mx-auto max-w-md space-y-4 text-neutral-400 select-none">
-          <h2 className="text-2xl font-bold text-neutral-200 z-10">
+        <div className="mx-auto max-w-md space-y-4 text-neutral-400 overflow-y-auto">
+          <h2 className="text-2xl font-bold text-neutral-400 z-10">
             Drag the handle at the top of this modal downwards 100px to close it
           </h2>
           <p>
@@ -94,7 +94,7 @@ const DragCloseDrawer = ({ open, setOpen, children }: Props) => {
             animate={{ y: "0%" }}
             exit={{ y: "100%", transition: { duration: 0.25 } }}
             transition={{ ease: "anticipate" }}
-            className="fixed bottom-0 h-[calc(100dvh_-_70px)] w-full overflow-hidden bg-white"
+            className="fixed bottom-0 h-[calc(100dvh_-_70px)] w-full overflow-y-auto bg-white"
           >
             <div className="relative h-full overflow-y-auto p-4 pt-8">
               {children}
