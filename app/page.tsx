@@ -10,7 +10,6 @@ type Props = {};
 
 export default function Homepage({}: Props) {
   const [open, setOpen] = useState(false);
-  console.log(open);
 
   return (
     <>
