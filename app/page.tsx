@@ -4,27 +4,28 @@ import { useState } from "react";
 import BottomPanel from "@/components/bottom-panel";
 import { DrawerSingle } from "@/components/drawers/drawer-single";
 import Carousel from "@/components/carousel";
-import { Double } from "@/components/drawers/double-panel.tsx";
+import { Search } from "@/components/drawers/search";
 
 type Props = {};
 
 export default function Homepage({}: Props) {
-  const [text, setText] = useState("");
+  const [open, setOpen] = useState(false);
+  console.log(open);
+
   return (
     <>
       <Carousel />
 
-      <Double />
+      <Search open={open} setOpen={setOpen} />
 
       <BottomPanel>
-        <div className="w-full flex justify-between items-center">
-          <input
-            type="search"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            className="w-full h-[50px] ml-4 rounded-xl px-4 text-xl"
-            placeholder="Search..."
-          />
+        <div className="w-full pl-4 flex justify-between items-center">
+          <div
+            onClick={() => setOpen(true)}
+            className="w-full bg-white flex items-center text-gray-500 h-[50px] rounded-xl px-4 text-xl"
+          >
+            Search...
+          </div>
 
           <DrawerSingle />
         </div>

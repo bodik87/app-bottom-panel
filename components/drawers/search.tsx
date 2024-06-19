@@ -7,17 +7,14 @@ import {
   motion,
 } from "framer-motion";
 
-export const Double = () => {
-  const [open, setOpen] = useState(false);
+type SearchProps = {
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+export const Search = ({ open, setOpen }: SearchProps) => {
   return (
     <>
-      <button
-        onClick={() => setOpen(true)}
-        className="w-fit rounded bg-indigo-500 px-4 py-2 text-white transition-colors hover:bg-indigo-600"
-      >
-        Open drawer
-      </button>
-
       <DragCloseDrawer open={open} setOpen={setOpen}>
         <div className="mx-auto max-w-2xl space-y-4 text-neutral-400">
           <h2 className="text-4xl font-bold text-neutral-200">
@@ -146,6 +143,7 @@ const DragCloseDrawer = ({ open, setOpen, children }: Props) => {
             <input
               type="search"
               value={text}
+              autoFocus
               onChange={(e) => setText(e.target.value)}
               className="w-full h-[50px] rounded-xl px-4 text-xl border-2"
               placeholder="Search..."
