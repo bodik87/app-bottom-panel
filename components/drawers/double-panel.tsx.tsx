@@ -5,7 +5,6 @@ import {
   useMotionValue,
   useAnimate,
   motion,
-  AnimatePresence,
 } from "framer-motion";
 
 export const Double = () => {
@@ -115,6 +114,7 @@ interface Props {
 
 const DragCloseDrawer = ({ open, setOpen, children }: Props) => {
   const [scope, animate] = useAnimate();
+  const [scopeTop, animateTop] = useAnimate();
   const [drawerRef, { height }] = useMeasure();
   const [text, setText] = useState("");
 
@@ -122,10 +122,10 @@ const DragCloseDrawer = ({ open, setOpen, children }: Props) => {
   const controls = useDragControls();
 
   const handleClose = async () => {
+    animateTop("#top", { opacity: [1, 0], y: [0, -100] });
+
     animate(scope.current, { opacity: [1, 0] });
-
     const yStart = typeof y.get() === "number" ? y.get() : 0;
-
     await animate("#drawer", { y: [yStart, height] });
 
     setOpen(false);
@@ -133,28 +133,26 @@ const DragCloseDrawer = ({ open, setOpen, children }: Props) => {
 
   return (
     <>
-      <AnimatePresence>
-        {open && (
-          <div ref={scope}>
-            <motion.div
-              onClick={(e) => e.stopPropagation()}
-              initial={{ y: "-100%" }}
-              animate={{ y: "0%" }}
-              exit={{ y: "-100%" }}
-              transition={{ ease: "easeInOut" }}
-              className="absolute top-0 h-[100px] w-full overflow-hidden shadow-md bg-white z-50 flex items-center justify-center px-4"
-            >
-              <input
-                type="search"
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                className="w-full h-[50px] rounded-xl px-4 text-xl border-2"
-                placeholder="Search..."
-              />
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+      {open && (
+        <div ref={scopeTop}>
+          <motion.div
+            id="top"
+            onClick={(e) => e.stopPropagation()}
+            initial={{ y: "-100%" }}
+            animate={{ y: "0%" }}
+            transition={{ ease: "easeInOut" }}
+            className="absolute top-0 h-[100px] w-full overflow-hidden shadow-md bg-white z-50 flex items-center justify-center px-4"
+          >
+            <input
+              type="search"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              className="w-full h-[50px] rounded-xl px-4 text-xl border-2"
+              placeholder="Search..."
+            />
+          </motion.div>
+        </div>
+      )}
 
       {open && (
         <motion.div
@@ -170,9 +168,7 @@ const DragCloseDrawer = ({ open, setOpen, children }: Props) => {
             onClick={(e) => e.stopPropagation()}
             initial={{ y: "100%" }}
             animate={{ y: "0%" }}
-            transition={{
-              ease: "easeInOut",
-            }}
+            transition={{ ease: "easeInOut" }}
             className="absolute bottom-0 h-[calc(100dvh_-_100px)] w-full overflow-hidden bg-white"
             style={{ y }}
             drag="y"
@@ -181,14 +177,8 @@ const DragCloseDrawer = ({ open, setOpen, children }: Props) => {
               if (y.get() >= 100) handleClose();
             }}
             dragListener={false}
-            dragConstraints={{
-              top: 0,
-              bottom: 0,
-            }}
-            dragElastic={{
-              top: 0,
-              bottom: 0.5,
-            }}
+            dragConstraints={{ top: 0, bottom: 0 }}
+            dragElastic={{ top: 0, bottom: 0.5 }}
           >
             <div className="absolute left-0 right-0 top-0 z-10 flex justify-center p-4 bg-white">
               <div
