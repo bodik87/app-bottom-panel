@@ -17,7 +17,7 @@ export const Search = ({ open, setOpen }: SearchProps) => {
     <>
       <DragCloseDrawer open={open} setOpen={setOpen}>
         <div className="mx-auto max-w-md space-y-4 text-neutral-400 select-none">
-          <h2 className="text-2xl font-bold text-neutral-200">
+          <h2 className="text-2xl font-bold text-neutral-200 z-10">
             Drag the handle at the top of this modal downwards 100px to close it
           </h2>
           <p>
