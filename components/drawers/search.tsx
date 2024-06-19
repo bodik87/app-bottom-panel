@@ -1,11 +1,6 @@
 import React, { Dispatch, ReactNode, SetStateAction, useState } from "react";
-import useMeasure from "react-use-measure";
-import {
-  useDragControls,
-  useMotionValue,
-  useAnimate,
-  motion,
-} from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { X } from "lucide-react";
 
 type SearchProps = {
   open: boolean;
@@ -58,87 +53,55 @@ interface Props {
 }
 
 const DragCloseDrawer = ({ open, setOpen, children }: Props) => {
-  const [scope, animate] = useAnimate();
-  const [scopeTop, animateTop] = useAnimate();
-  const [drawerRef, { height }] = useMeasure();
   const [text, setText] = useState("");
 
-  const y = useMotionValue(0);
-  const controls = useDragControls();
-
-  const handleClose = async () => {
-    animateTop("#top", { opacity: [1, 0], y: [0, -100] });
-
-    animate(scope.current, { opacity: [1, 0] });
-    const yStart = typeof y.get() === "number" ? y.get() : 0;
-    await animate("#drawer", { y: [yStart, height] });
-
+  const handleClose = () => {
     setOpen(false);
+    setText("");
   };
 
   return (
-    <>
+    <AnimatePresence>
       {open && (
-        <div ref={scopeTop}>
+        <>
           <motion.div
-            id="top"
-            onClick={(e) => e.stopPropagation()}
             initial={{ y: "-100%" }}
             animate={{ y: "0%" }}
+            exit={{ y: "-100%" }}
             transition={{ ease: "easeInOut" }}
-            className="absolute top-0 h-[100px] w-full overflow-hidden shadow-md bg-white z-20 flex items-center justify-center px-4"
+            className="fixed top-0 h-[70px] w-full overflow-hidden shadow-md bg-gray-200 flex items-center justify-between pl-4"
           >
-            <input
-              type="search"
-              value={text}
-              autoFocus
-              onChange={(e) => setText(e.target.value)}
-              className="max-w-md mx-auto w-full h-[50px] rounded-xl px-4 text-xl border-2"
-              placeholder="Search..."
-            />
+            <div className="max-w-md mx-auto w-full flex justify-between items-center">
+              <input
+                type="search"
+                value={text}
+                autoFocus
+                onChange={(e) => setText(e.target.value)}
+                className="w-full h-[50px] rounded-xl px-4 text-xl border-2"
+                placeholder="Search..."
+              />
+              <button
+                onClick={handleClose}
+                className="min-w-[70px] h-[70px] flex justify-center items-center"
+              >
+                <X size={30} />
+              </button>
+            </div>
           </motion.div>
-        </div>
-      )}
 
-      {open && (
-        <motion.div
-          ref={scope}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          onClick={handleClose}
-          className="fixed inset-0 z-10 bg-neutral-950/70"
-        >
           <motion.div
-            id="drawer"
-            ref={drawerRef}
-            onClick={(e) => e.stopPropagation()}
             initial={{ y: "100%" }}
             animate={{ y: "0%" }}
-            transition={{ ease: "easeInOut" }}
-            className="absolute bottom-0 h-[calc(100dvh_-_100px)] w-full overflow-hidden bg-white"
-            style={{ y }}
-            drag="y"
-            dragControls={controls}
-            onDragEnd={() => {
-              if (y.get() >= 100) handleClose();
-            }}
-            dragListener={false}
-            dragConstraints={{ top: 0, bottom: 0 }}
-            dragElastic={{ top: 0, bottom: 0.5 }}
+            exit={{ y: "100%", transition: { duration: 0.25 } }}
+            transition={{ ease: "anticipate" }}
+            className="fixed bottom-0 h-[calc(100dvh_-_70px)] w-full overflow-hidden bg-white"
           >
-            <div
-              onPointerDown={(e) => controls.start(e)}
-              className="absolute left-0 right-0 top-0 z-10 flex justify-center p-4 bg-white touch-none cursor-grab active:cursor-grabbing select-none"
-            >
-              <div className="h-2 w-14 rounded-full bg-gray-300" />
-            </div>
-
-            <div className="relative z-0 h-full overflow-y-auto p-4 pt-12">
+            <div className="relative h-full overflow-y-auto p-4 pt-8">
               {children}
             </div>
           </motion.div>
-        </motion.div>
+        </>
       )}
-    </>
+    </AnimatePresence>
   );
 };
