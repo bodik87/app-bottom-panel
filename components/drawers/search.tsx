@@ -77,7 +77,7 @@ export const Search = ({ items, open, setOpen }: SearchProps) => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0, transition: { duration: 0.25 } }}
               transition={{ ease: "anticipate" }}
-              className="fixed bottom-0 h-[calc(100svh_-_70px)] v-app w-full overflow-y-auto bg-white"
+              className="fixed bottom-0 h-[calc(100svh_-_70px)] w-full overflow-y-auto bg-white"
             >
               <div className="relative h-full overflow-y-auto p-4">
                 <div className="mx-auto max-w-md space-y-4">
