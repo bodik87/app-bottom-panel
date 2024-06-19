@@ -7,6 +7,8 @@ import Carousel from "@/components/carousel";
 import { Search as SearchPanel } from "@/components/drawers/search";
 import { Search } from "lucide-react";
 
+const items = ["First element", "Item", "Element", "Something else"];
+
 type Props = {};
 
 export default function Homepage({}: Props) {
@@ -16,7 +18,7 @@ export default function Homepage({}: Props) {
     <>
       <Carousel />
 
-      <SearchPanel open={open} setOpen={setOpen} />
+      <SearchPanel items={items} open={open} setOpen={setOpen} />
 
       <BottomPanel>
         <div className="w-full pl-4 flex justify-between items-center">
