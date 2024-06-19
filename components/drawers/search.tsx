@@ -65,9 +65,9 @@ const DragCloseDrawer = ({ open, setOpen, children }: Props) => {
       {open && (
         <>
           <motion.div
-            initial={{ y: "-100%" }}
-            animate={{ y: "0%" }}
-            exit={{ y: "-100%" }}
+            initial={{ opacity: 0, y: "-80%" }}
+            animate={{ opacity: 1, y: "0%" }}
+            exit={{ opacity: 0, y: "-80%" }}
             transition={{ ease: "easeInOut" }}
             className="fixed top-0 h-[70px] w-full overflow-hidden shadow-md bg-gray-200 flex items-center justify-between pl-4"
           >
@@ -90,9 +90,9 @@ const DragCloseDrawer = ({ open, setOpen, children }: Props) => {
           </motion.div>
 
           <motion.div
-            initial={{ y: "100%" }}
-            animate={{ y: "0%" }}
-            exit={{ y: "100%", transition: { duration: 0.25 } }}
+            initial={{ opacity: 0, y: "10%" }}
+            animate={{ opacity: 1, y: "0%" }}
+            exit={{ opacity: 0, y: "50%", transition: { duration: 0.25 } }}
             transition={{ ease: "anticipate" }}
             className="fixed bottom-0 h-[calc(100dvh_-_70px)] w-full overflow-y-auto bg-white"
           >
