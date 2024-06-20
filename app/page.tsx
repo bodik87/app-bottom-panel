@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BottomPanel from "@/components/bottom-panel";
 import { DrawerSingle } from "@/components/drawers/drawer-single";
 import Carousel from "@/components/carousel";
 import { Delete, Search } from "lucide-react";
+import useWindowDimensions from "@/lib/useWindowDimensions";
 
 const items = [
   "First element",
@@ -21,6 +22,11 @@ const items = [
   "Element",
   "Something else",
 ];
+
+function getWindowDimensions() {
+  const { innerWidth: width, innerHeight: height } = window;
+  return { width, height };
+}
 
 export default function Homepage() {
   const [text, setText] = useState("");
@@ -46,6 +52,12 @@ export default function Homepage() {
       setText("");
     }
   };
+
+  const { height, width } = useWindowDimensions();
+
+  useEffect(() => {
+    window.document.body.style.height = height.toString();
+  }, [height]);
 
   return (
     <>
