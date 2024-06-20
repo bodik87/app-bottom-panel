@@ -4,15 +4,25 @@ import { useState } from "react";
 import BottomPanel from "@/components/bottom-panel";
 import { DrawerSingle } from "@/components/drawers/drawer-single";
 import Carousel from "@/components/carousel";
-import { Search as SearchPanel } from "@/components/drawers/search";
-import { Delete, Search, X } from "lucide-react";
+import { Delete, Search } from "lucide-react";
 
-const items = ["First element", "Item", "Element", "Something else"];
+const items = [
+  "First element",
+  "Item 2",
+  "Element",
+  "First 22",
+  "Item 3",
+  "Element",
+  "First 44",
+  "Item 4",
+  "Element",
+  "First element",
+  "Item 56",
+  "Element",
+  "Something else",
+];
 
-type Props = {};
-
-export default function Homepage({}: Props) {
-  const [open, setOpen] = useState(false);
+export default function Homepage() {
   const [text, setText] = useState("");
 
   const filteredItems =
@@ -32,8 +42,9 @@ export default function Homepage({}: Props) {
         );
 
   const handleClose = () => {
-    setOpen(false);
-    setText("");
+    if (text) {
+      setText("");
+    }
   };
 
   return (
@@ -50,14 +61,14 @@ export default function Homepage({}: Props) {
               className="w-full h-[50px] rounded-xl pl-4 pr-10 text-xl ring-1 ring-gray-300 "
               placeholder="Search..."
             />
-            {text && (
-              <button
-                onClick={() => setText("")}
-                className="absolute right-0 top-0 h-[50px] w-[50px] rounded-r-xl flex items-center justify-center"
-              >
-                <Delete />
-              </button>
-            )}
+            <button
+              onClick={handleClose}
+              className={`${
+                !text && "cursor-default"
+              } absolute right-0 top-0 h-[50px] w-[50px] rounded-r-xl flex items-center justify-center`}
+            >
+              {text ? <Delete /> : <Search />}
+            </button>
           </div>
 
           <DrawerSingle />
