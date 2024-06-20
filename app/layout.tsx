@@ -20,7 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} h-dvh`}>{children}</body>
+      <body className={`${inter.className} flex flex-col flex-shrink`}>
+        {children}
+      </body>
     </html>
   );
 }
