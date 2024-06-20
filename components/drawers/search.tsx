@@ -77,7 +77,7 @@ export const Search = ({ items, open, setOpen }: SearchProps) => {
               transition={{ ease: "easeInOut" }}
               className="fixed bottom-0 h-[70px] w-full overflow-hidden shadow-md bg-gray-200 flex items-center justify-between"
             >
-              <div className="max-w-md mx-auto w-full pl-4 flex justify-between items-center">
+              <div className="max-w-md mx-auto border-t w-full pl-4 flex justify-between items-center">
                 <div className="relative w-full">
                   <input
                     type="search"

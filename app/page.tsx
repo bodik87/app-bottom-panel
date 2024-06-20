@@ -5,7 +5,7 @@ import BottomPanel from "@/components/bottom-panel";
 import { DrawerSingle } from "@/components/drawers/drawer-single";
 import Carousel from "@/components/carousel";
 import { Search as SearchPanel } from "@/components/drawers/search";
-import { Search } from "lucide-react";
+import { Delete, Search, X } from "lucide-react";
 
 const items = ["First element", "Item", "Element", "Something else"];
 
@@ -13,21 +13,51 @@ type Props = {};
 
 export default function Homepage({}: Props) {
   const [open, setOpen] = useState(false);
+  const [text, setText] = useState("");
+
+  const filteredItems =
+    text === ""
+      ? []
+      : items.filter(
+          (element: any) =>
+            element
+              .toLowerCase()
+              .replace(/\s+/g, "")
+              .includes(text.toLowerCase().replace(/\s+/g, ""))
+          // ||
+          // element?.info
+          //   ?.toLowerCase()
+          //   .replace(/\s+/g, "")
+          //   .includes(text.toLowerCase().replace(/\s+/g, ""))
+        );
+
+  const handleClose = () => {
+    setOpen(false);
+    setText("");
+  };
 
   return (
     <>
       <Carousel />
 
-      <SearchPanel items={items} open={open} setOpen={setOpen} />
-
       <BottomPanel>
         <div className="w-full pl-4 flex justify-between items-center">
-          <div
-            onClick={() => setOpen(true)}
-            className="w-full bg-white flex items-center justify-between text-gray-500 h-[50px] rounded-xl px-4 text-xl cursor-text hover:ring-1 hover:ring-gray-300 transition-all"
-          >
-            <span> Search...</span>
-            <Search />
+          <div className="relative w-full">
+            <input
+              type="search"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              className="w-full h-[50px] rounded-xl pl-4 pr-10 text-xl ring-1 ring-gray-300 "
+              placeholder="Search..."
+            />
+            {text && (
+              <button
+                onClick={() => setText("")}
+                className="absolute right-0 top-0 h-[50px] w-[50px] rounded-r-xl flex items-center justify-center"
+              >
+                <Delete />
+              </button>
+            )}
           </div>
 
           <DrawerSingle />
