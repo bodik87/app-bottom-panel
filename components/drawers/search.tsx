@@ -37,47 +37,11 @@ export const Search = ({ items, open, setOpen }: SearchProps) => {
         {open && (
           <>
             <motion.div
-              initial={{ opacity: 0, y: "-80%" }}
-              animate={{ opacity: 1, y: "0%" }}
-              exit={{ opacity: 0, y: "-80%" }}
-              transition={{ ease: "easeInOut" }}
-              className="fixed top-0 h-[70px] w-full overflow-hidden shadow-md bg-gray-200 flex items-center justify-between pl-4"
-            >
-              <div className="max-w-md mx-auto w-full flex justify-between items-center">
-                <div className="relative w-full">
-                  <input
-                    type="search"
-                    value={text}
-                    autoFocus
-                    onChange={(e) => setText(e.target.value)}
-                    className="w-full h-[50px] rounded-xl pl-4 pr-10 text-xl border-2"
-                    placeholder="Search..."
-                  />
-                  {text && (
-                    <button
-                      onClick={() => setText("")}
-                      className="absolute right-0 top-0 h-[50px] w-[50px] rounded-r-xl flex items-center justify-center"
-                    >
-                      <Delete />
-                    </button>
-                  )}
-                </div>
-
-                <button
-                  onClick={handleClose}
-                  className="min-w-[70px] h-[70px] flex justify-center items-center"
-                >
-                  <X size={30} />
-                </button>
-              </div>
-            </motion.div>
-
-            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0, transition: { duration: 0.25 } }}
               transition={{ ease: "anticipate" }}
-              className="fixed bottom-0 h-[calc(100svh_-_70px)] w-full overflow-y-auto bg-white"
+              className="fixed top-0 h-[calc(100svh_-_70px)] w-full overflow-y-auto bg-white"
             >
               <div className="relative h-full overflow-y-auto p-4">
                 <div className="mx-auto max-w-md space-y-4">
@@ -103,6 +67,42 @@ export const Search = ({ items, open, setOpen }: SearchProps) => {
                     </>
                   )}
                 </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ ease: "easeInOut" }}
+              className="fixed bottom-0 h-[70px] w-full overflow-hidden shadow-md bg-gray-200 flex items-center justify-between"
+            >
+              <div className="max-w-md mx-auto w-full pl-4 flex justify-between items-center">
+                <div className="relative w-full">
+                  <input
+                    type="search"
+                    value={text}
+                    autoFocus
+                    onChange={(e) => setText(e.target.value)}
+                    className="w-full h-[50px] rounded-xl pl-4 pr-10 text-xl ring-1 ring-gray-300 "
+                    placeholder="Search..."
+                  />
+                  {text && (
+                    <button
+                      onClick={() => setText("")}
+                      className="absolute right-0 top-0 h-[50px] w-[50px] rounded-r-xl flex items-center justify-center"
+                    >
+                      <Delete />
+                    </button>
+                  )}
+                </div>
+
+                <button
+                  onClick={handleClose}
+                  className="min-w-[70px] h-[70px] flex justify-center items-center"
+                >
+                  <X size={30} />
+                </button>
               </div>
             </motion.div>
           </>
